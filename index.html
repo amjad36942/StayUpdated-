@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100 PSX Did You Know</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #00c853;
+    --red: #ff1744;
+    --gold: #ffd600;
+    --dark: #0a0f0a;
+    --card: #111811;
+    --border: #1e2e1e;
+    --text: #e8f5e9;
+    --muted: #6a8f6a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, #1a2a1a 39px, #1a2a1a 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, #1a2a1a 39px, #1a2a1a 40px);
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+  }
+
+  header::before {
+    content: "PSX";
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 180px;
+    color: #ffffff08;
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    letter-spacing: 20px;
+    white-space: nowrap;
+  }
+
+  .header-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    letter-spacing: 6px;
+    line-height: 1;
+    color: var(--text);
+    position: relative;
+  }
+
+  h1 span { color: var(--green); }
+
+  .subtitle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 12px;
+    letter-spacing: 2px;
+  }
+
+  .ticker-bar {
+    background: var(--green);
+    color: var(--dark);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 0;
+    overflow: hidden;
+    margin: 40px 0;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 30s linear infinite;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .filters {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .filter-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 7px 16px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--green);
+    color: var(--green);
+    background: #00c85310;
+  }
+
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .search-bar input {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    padding: 12px 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 100%;
+    max-width: 500px;
+    outline: none;
+    letter-spacing: 1px;
+  }
+
+  .search-bar input:focus { border-color: var(--green); }
+  .search-bar input::placeholder { color: var(--muted); }
+
+  .counter {
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: transform 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card:hover {
+    border-color: var(--green);
+    transform: translateY(-2px);
+    z-index: 2;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .card[data-cat="history"]::before { background: var(--gold); }
+  .card[data-cat="index"]::before { background: var(--green); }
+  .card[data-cat="market"]::before { background: #00bcd4; }
+  .card[data-cat="companies"]::before { background: #ff6d00; }
+  .card[data-cat="regulation"]::before { background: #9c27b0; }
+  .card[data-cat="economy"]::before { background: var(--red); }
+  .card[data-cat="records"]::before { background: var(--gold); }
+  .card[data-cat="global"]::before { background: #00bcd4; }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .card-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: #ffffff08;
+    line-height: 1;
+    position: absolute;
+    bottom: 12px;
+    right: 16px;
+    transition: color 0.2s;
+  }
+
+  .card:hover .card-num { color: #ffffff14; }
+
+  .cat-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+
+  .cat-history { background: #ffd60020; color: var(--gold); }
+  .cat-index { background: #00c85320; color: var(--green); }
+  .cat-market { background: #00bcd420; color: #00bcd4; }
+  .cat-companies { background: #ff6d0020; color: #ff6d00; }
+  .cat-regulation { background: #9c27b020; color: #ce93d8; }
+  .cat-economy { background: #ff174420; color: var(--red); }
+  .cat-records { background: #ffd60020; color: var(--gold); }
+  .cat-global { background: #00bcd420; color: #00bcd4; }
+
+  .did-you-know {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .card-fact {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text);
+    font-weight: 300;
+    padding-right: 30px;
+  }
+
+  .card-fact strong {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .emoji-icon {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .hidden { display: none !important; }
+
+  .no-results {
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--muted);
+    padding: 60px;
+    letter-spacing: 2px;
+    font-size: 13px;
+    display: none;
+    grid-column: 1/-1;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 80px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    padding-bottom: 40px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="header-tag">▲ Pakistan Stock Exchange</span>
+  <h1>DID YOU <span>KNOW</span></h1>
+  <p class="subtitle">100 FACTS · PSX · KSE-100 · KARACHI</p>
+</header>
+
+<div class="ticker-bar">
+  <span class="ticker-inner">
+    KSE-100 &nbsp;▲&nbsp; PSX &nbsp;◆&nbsp; PAKISTAN STOCK EXCHANGE &nbsp;▲&nbsp; KSE-30 &nbsp;◆&nbsp; KMI-30 &nbsp;▲&nbsp; LSE &nbsp;◆&nbsp; ISE &nbsp;▲&nbsp; DID YOU KNOW &nbsp;◆&nbsp; 100 FACTS &nbsp;▲&nbsp; KSE-100 &nbsp;◆&nbsp; PSX &nbsp;▲&nbsp; PAKISTAN STOCK EXCHANGE &nbsp;◆&nbsp; KSE-30 &nbsp;▲&nbsp; KMI-30 &nbsp;◆&nbsp; LSE &nbsp;▲&nbsp; ISE &nbsp;◆&nbsp; DID YOU KNOW &nbsp;▲&nbsp; 100 FACTS &nbsp;◆&nbsp;
+  </span>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search facts..." oninput="filterCards()">
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="setFilter('all', this)">All (100)</button>
+  <button class="filter-btn" onclick="setFilter('history', this)">🏛 History</button>
+  <button class="filter-btn" onclick="setFilter('index', this)">📈 Index</button>
+  <button class="filter-btn" onclick="setFilter('market', this)">💹 Market</button>
+  <button class="filter-btn" onclick="setFilter('companies', this)">🏢 Companies</button>
+  <button class="filter-btn" onclick="setFilter('regulation', this)">⚖️ Regulation</button>
+  <button class="filter-btn" onclick="setFilter('economy', this)">🇵🇰 Economy</button>
+  <button class="filter-btn" onclick="setFilter('records', this)">🏆 Records</button>
+  <button class="filter-btn" onclick="setFilter('global', this)">🌍 Global</button>
+</div>
+
+<div class="counter" id="counter">Showing 100 of 100 facts</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="no-results" id="noResults">NO FACTS FOUND · TRY ANOTHER SEARCH</div>
+
+<footer>
+  PSX · PAKISTAN STOCK EXCHANGE · KARACHI &nbsp;|&nbsp; 100 FACTS &nbsp;|&nbsp; DATA FOR EDUCATIONAL PURPOSES
+</footer>
+
+<script>
+const facts = [
+  // HISTORY
+  { num: 1, cat: "history", icon: "🏛", fact: "The Karachi Stock Exchange (KSE) was established on <strong>September 18, 1947</strong> — just 33 days after Pakistan's independence." },
+  { num: 2, cat: "history", icon: "📜", fact: "The KSE started with only <strong>5 companies</strong> and a paid-up capital of just Rs. 37 million in 1947." },
+  { num: 3, cat: "history", icon: "🤝", fact: "The <strong>Lahore Stock Exchange (LSE)</strong> was founded in 1970, and the Islamabad Stock Exchange (ISE) in 1992." },
+  { num: 4, cat: "history", icon: "🔗", fact: "In <strong>January 2016</strong>, the KSE, LSE, and ISE were merged to form the <strong>Pakistan Stock Exchange (PSX)</strong> — one unified national bourse." },
+  { num: 5, cat: "history", icon: "📅", fact: "PSX was officially launched on <strong>January 11, 2016</strong>, making Pakistan one of the few countries to successfully consolidate three exchanges into one." },
+  { num: 6, cat: "history", icon: "🐉", fact: "In <strong>2017</strong>, a Chinese consortium — led by Shanghai and Shenzhen stock exchanges — acquired a <strong>40% strategic stake</strong> in PSX." },
+  { num: 7, cat: "history", icon: "📡", fact: "PSX introduced <strong>electronic trading</strong> for the first time in 1997, replacing the open-outcry system on the trading floor." },
+  { num: 8, cat: "history", icon: "🌐", fact: "Before computerization, trades at KSE were settled using <strong>paper-based badla</strong> (carry-over trade) — a system inherited from British India." },
+  { num: 9, cat: "history", icon: "🏗️", fact: "The <strong>Stock Exchange Building</strong> in Karachi's I.I. Chundrigar Road has been the heart of Pakistani finance since the 1960s." },
+  { num: 10, cat: "history", icon: "⚡", fact: "In <strong>2008</strong>, during the global financial crisis, PSX imposed a <strong>price floor</strong> for 108 days — one of the longest market freezes in Asian history." },
+
+  // INDEX
+  { num: 11, cat: "index", icon: "📊", fact: "The <strong>KSE-100 Index</strong> was launched on November 1, 1991, with a base value of <strong>1,000 points</strong>." },
+  { num: 12, cat: "index", icon: "🚀", fact: "The KSE-100 crossed <strong>100,000 points</strong> for the first time in May 2024 — a 100× rise from its base value in just over 30 years." },
+  { num: 13, cat: "index", icon: "📈", fact: "The KSE-100 includes the <strong>top 100 companies</strong> by market capitalization from each sector listed on PSX." },
+  { num: 14, cat: "index", icon: "⚖️", fact: "The <strong>KMI-30</strong> (Karachi Meezan Index) tracks the top 30 <strong>Shariah-compliant</strong> companies — a unique Islamic stock index." },
+  { num: 15, cat: "index", icon: "🔢", fact: "The <strong>KSE-30 Index</strong> tracks the 30 largest companies by free-float market capitalization on PSX." },
+  { num: 16, cat: "index", icon: "📉", fact: "The KSE-100 lost nearly <strong>40% of its value</strong> in 2008 during the global financial meltdown — one of the steepest single-year declines." },
+  { num: 17, cat: "index", icon: "🌟", fact: "In <strong>2016</strong>, the KSE-100 was declared the <strong>best-performing stock index</strong> in Asia by Bloomberg, gaining over 45% that year." },
+  { num: 18, cat: "index", icon: "💯", fact: "Between 2002 and 2007, the KSE-100 rose from around <strong>1,000 to 14,000 points</strong> — a 14× bull run in just 5 years." },
+  { num: 19, cat: "index", icon: "🏆", fact: "The KSE-100 was declared the <strong>world's best-performing index</strong> in 2002 by international financial media." },
+  { num: 20, cat: "index", icon: "🔄", fact: "The KSE-100 rebalances its constituent companies <strong>twice a year</strong> — every January and July." },
+
+  // MARKET
+  { num: 21, cat: "market", icon: "💰", fact: "PSX's total <strong>market capitalization</strong> has exceeded <strong>$40 billion USD</strong> at its peak, representing a significant chunk of Pakistan's GDP." },
+  { num: 22, cat: "market", icon: "⏰", fact: "PSX trading hours are <strong>9:15 AM to 3:30 PM</strong> (PKT), Monday through Friday, with a pre-open session from 9:00 to 9:15 AM." },
+  { num: 23, cat: "market", icon: "🛑", fact: "PSX uses <strong>circuit breakers</strong> — if the index falls 5% in a day, trading is halted for 1 hour as a market safety mechanism." },
+  { num: 24, cat: "market", icon: "🏦", fact: "The <strong>banking sector</strong> is consistently the largest sector on PSX by market cap, led by giants like HBL, UBL, and MCB." },
+  { num: 25, cat: "market", icon: "⚡", fact: "PSX uses the <strong>KATS (KSE Automated Trading System)</strong>, a world-class electronic trading platform that handles thousands of transactions per second." },
+  { num: 26, cat: "market", icon: "🔒", fact: "<strong>T+2 settlement</strong> is the standard at PSX — meaning trades are settled within 2 working days of execution." },
+  { num: 27, cat: "market", icon: "📱", fact: "PSX launched a <strong>mobile trading app</strong> to democratize investing, allowing ordinary Pakistanis to trade stocks from their smartphones." },
+  { num: 28, cat: "market", icon: "🌱", fact: "The <strong>SME Board</strong> on PSX was created specifically to help small and medium enterprises access capital markets." },
+  { num: 29, cat: "market", icon: "🎯", fact: "PSX has a dedicated <strong>Debt Market</strong> for trading government securities (T-bills and Pakistan Investment Bonds)." },
+  { num: 30, cat: "market", icon: "💎", fact: "The <strong>futures market</strong> at PSX allows investors to hedge risk through single stock futures and index futures contracts." },
+  { num: 31, cat: "market", icon: "🏭", fact: "The <strong>cement, fertilizer, and textile</strong> sectors are among the most traded on PSX, reflecting Pakistan's industrial backbone." },
+  { num: 32, cat: "market", icon: "🔑", fact: "A <strong>Unique Identification Number (UIN)</strong> from NCCPL is mandatory for every investor trading on PSX." },
+  { num: 33, cat: "market", icon: "📦", fact: "PSX has an <strong>Exchange Traded Funds (ETF)</strong> segment — a relatively new product allowing passive, diversified investing." },
+  { num: 34, cat: "market", icon: "💸", fact: "The average daily trading volume on PSX often exceeds <strong>300–500 million shares</strong> on active market days." },
+  { num: 35, cat: "market", icon: "🛢️", fact: "The <strong>oil & gas sector</strong> (OGDC, PSO, PPL) is a dominant force on PSX, with the government holding major stakes." },
+
+  // COMPANIES
+  { num: 36, cat: "companies", icon: "🏢", fact: "PSX has over <strong>500 listed companies</strong> across more than 30 sectors of the Pakistani economy." },
+  { num: 37, cat: "companies", icon: "👑", fact: "<strong>Habib Bank Limited (HBL)</strong> is historically one of PSX's most valuable companies, often ranking #1 by market cap." },
+  { num: 38, cat: "companies", icon: "💡", fact: "<strong>OGDC (Oil & Gas Development Company)</strong> is among the largest state-owned companies listed on PSX." },
+  { num: 39, cat: "companies", icon: "📱", fact: "<strong>Systems Limited</strong> became PSX's first IT company to cross Rs. 100 billion in market cap, highlighting the rise of tech stocks." },
+  { num: 40, cat: "companies", icon: "🍫", fact: "<strong>Engro Corporation</strong> is one of Pakistan's most diversified conglomerates, with businesses ranging from fertilizers to LNG terminals." },
+  { num: 41, cat: "companies", icon: "🚗", fact: "<strong>Indus Motor Company (IMC)</strong> — maker of Toyota cars in Pakistan — is a high-performing PSX blue-chip stock." },
+  { num: 42, cat: "companies", icon: "🌾", fact: "<strong>Fauji Fertilizer Company (FFC)</strong> is one of Pakistan's most consistently profitable companies and a top dividend payer on PSX." },
+  { num: 43, cat: "companies", icon: "🏗️", fact: "<strong>Lucky Cement</strong> is the largest cement company in Pakistan by capacity and one of the most valuable on PSX." },
+  { num: 44, cat: "companies", icon: "🛒", fact: "<strong>Unilever Pakistan</strong> has been listed on PSX and is known for one of the highest share prices on the exchange." },
+  { num: 45, cat: "companies", icon: "✈️", fact: "<strong>PIA (Pakistan International Airlines)</strong> was listed on the exchange but has faced prolonged financial difficulties over decades." },
+  { num: 46, cat: "companies", icon: "⚡", fact: "<strong>K-Electric</strong>, the sole power utility of Karachi, is publicly listed on PSX and serves millions of customers." },
+  { num: 47, cat: "companies", icon: "🥛", fact: "<strong>Nestlé Pakistan</strong> has one of the highest per-share prices on PSX, often trading above Rs. 6,000–7,000 per share." },
+  { num: 48, cat: "companies", icon: "💊", fact: "<strong>GlaxoSmithKline Pakistan</strong> (now Haleon) has been one of the most well-known multinational companies listed on PSX." },
+  { num: 49, cat: "companies", icon: "🏦", fact: "<strong>MCB Bank</strong> is often cited as one of the most efficiently run commercial banks on the PSX, beloved by long-term investors." },
+  { num: 50, cat: "companies", icon: "🌐", fact: "<strong>TRG Pakistan</strong> has been one of PSX's rare tech-sector success stories with global BPO and fintech operations." },
+
+  // REGULATION
+  { num: 51, cat: "regulation", icon: "⚖️", fact: "PSX is regulated by the <strong>Securities and Exchange Commission of Pakistan (SECP)</strong>, established in 1997." },
+  { num: 52, cat: "regulation", icon: "🏛️", fact: "The <strong>NCCPL (National Clearing Company of Pakistan)</strong> handles all trade clearing and settlement for PSX." },
+  { num: 53, cat: "regulation", icon: "📂", fact: "<strong>CDC (Central Depository Company)</strong> maintains the electronic record of share ownership for all PSX investors." },
+  { num: 54, cat: "regulation", icon: "🛡️", fact: "PSX has an <strong>Investor Protection Fund</strong> to compensate investors in case a brokerage defaults on its obligations." },
+  { num: 55, cat: "regulation", icon: "🔍", fact: "SECP can <strong>suspend trading</strong> of any company's shares pending investigation into insider trading or financial irregularities." },
+  { num: 56, cat: "regulation", icon: "📊", fact: "All listed companies must publish <strong>quarterly financial results</strong> within 30 days of each quarter's end." },
+  { num: 57, cat: "regulation", icon: "🔔", fact: "A company must inform PSX of any <strong>material information</strong> (dividends, mergers, earnings) before making it public — preventing insider trading." },
+  { num: 58, cat: "regulation", icon: "💼", fact: "PSX brokers must hold a <strong>license from SECP</strong> and maintain a minimum net capital requirement to operate." },
+  { num: 59, cat: "regulation", icon: "🌿", fact: "PSX introduced <strong>ESG (Environmental, Social, Governance)</strong> reporting guidelines to push companies toward sustainable practices." },
+  { num: 60, cat: "regulation", icon: "🔒", fact: "Trading on <strong>insider information</strong> is a criminal offense in Pakistan, carrying fines and imprisonment under the Securities Act 2015." },
+
+  // ECONOMY
+  { num: 61, cat: "economy", icon: "🇵🇰", fact: "PSX market cap as a share of Pakistan's GDP is relatively low (~<strong>15–20%</strong>), indicating massive room for capital market growth." },
+  { num: 62, cat: "economy", icon: "💵", fact: "Foreign investors (FPIs) can invest in PSX stocks and <strong>freely repatriate profits</strong> — a key attraction for global capital." },
+  { num: 63, cat: "economy", icon: "📉", fact: "Political instability, inflation, and currency depreciation have historically caused <strong>sharp sell-offs</strong> on PSX." },
+  { num: 64, cat: "economy", icon: "🏦", fact: "IMF bailout programs often cause <strong>short-term market uncertainty</strong> but can boost long-term confidence in PSX." },
+  { num: 65, cat: "economy", icon: "📰", fact: "When the <strong>State Bank of Pakistan (SBP)</strong> raises interest rates, PSX often dips — higher yields make bonds more attractive than equities." },
+  { num: 66, cat: "economy", icon: "💱", fact: "A depreciating <strong>Pakistani Rupee</strong> tends to boost stocks of export-oriented companies (textiles, IT) on PSX." },
+  { num: 67, cat: "economy", icon: "🛢️", fact: "Global <strong>oil price fluctuations</strong> directly impact energy stocks on PSX — Pakistan imports over 80% of its oil needs." },
+  { num: 68, cat: "economy", icon: "🌾", fact: "Agricultural cycles affect <strong>fertilizer and food sector</strong> stocks heavily — monsoon success can lift the entire market." },
+  { num: 69, cat: "economy", icon: "🤝", fact: "The <strong>CPEC (China-Pakistan Economic Corridor)</strong> created a wave of optimism that significantly boosted PSX valuations in 2015–2017." },
+  { num: 70, cat: "economy", icon: "📊", fact: "The <strong>textile sector</strong> is Pakistan's #1 export earner and one of the most-listed sectors on PSX with dozens of companies." },
+  { num: 71, cat: "economy", icon: "🏠", fact: "Pakistan's <strong>low financial inclusion rate</strong> — with only ~3% of the population investing in equities — means PSX has enormous untapped potential." },
+  { num: 72, cat: "economy", icon: "💰", fact: "Dividend yields on PSX are often among the <strong>highest in Asia</strong>, with many banks and fertilizer companies paying 8–15% annually." },
+  { num: 73, cat: "economy", icon: "🚀", fact: "The <strong>IT sector boom</strong> (2019–2022) saw technology companies become some of the fastest-growing stocks on PSX." },
+  { num: 74, cat: "economy", icon: "🧩", fact: "<strong>Remittances</strong> from the Pakistani diaspora indirectly support PSX by increasing domestic liquidity and consumer spending." },
+  { num: 75, cat: "economy", icon: "🌊", fact: "The <strong>2022 Pakistan floods</strong> impacted PSX heavily, wiping billions from market cap as economic damage estimates surged." },
+
+  // RECORDS
+  { num: 76, cat: "records", icon: "🏆", fact: "PSX's <strong>highest single-day gain</strong> was over 2,000 points on the KSE-100 — fueled by political clarity and economic relief news." },
+  { num: 77, cat: "records", icon: "📈", fact: "The KSE-100 crossed <strong>100,000 points</strong> in May 2024 — making it only the second index in South Asia to hit a 6-digit milestone." },
+  { num: 78, cat: "records", icon: "💥", fact: "In the <strong>2008 freeze</strong>, the KSE set a floor at around 9,144 points — preventing free fall but causing massive investor losses trapped inside." },
+  { num: 79, cat: "records", icon: "🌟", fact: "KSE-100 was the <strong>world's 5th best-performing index</strong> in dollar terms in 2016, beating most global markets." },
+  { num: 80, cat: "records", icon: "💰", fact: "<strong>HBL's IPO</strong> in 2015 was one of the largest public offerings in PSX history, raising billions of rupees from investors." },
+  { num: 81, cat: "records", icon: "📊", fact: "The <strong>highest market cap</strong> ever recorded on PSX exceeded Rs. 9 trillion at the peak of the 2024 bull run." },
+  { num: 82, cat: "records", icon: "⚡", fact: "PSX experienced its <strong>longest bull run</strong> between 2002–2007, where the index rose over 1,000% without a major correction." },
+  { num: 83, cat: "records", icon: "🎢", fact: "The <strong>worst single-day crash</strong> in KSE history was in 2008, where the index lost over 900 points in one session." },
+  { num: 84, cat: "records", icon: "🔥", fact: "PSX once recorded a daily <strong>trading volume of over 1 billion shares</strong> — a testament to market activity and retail participation." },
+  { num: 85, cat: "records", icon: "💎", fact: "<strong>Engro Corporation</strong> once completed one of the largest Rights Issues in PSX history to fund its LNG terminal project." },
+
+  // GLOBAL
+  { num: 86, cat: "global", icon: "🌍", fact: "PSX was upgraded to <strong>MSCI Emerging Market status</strong> in May 2017 — a huge milestone attracting billions in foreign investment." },
+  { num: 87, cat: "global", icon: "📉", fact: "PSX was subsequently <strong>reclassified back to Frontier Market</strong> by MSCI in 2021 due to reduced foreign investor interest." },
+  { num: 88, cat: "global", icon: "🤝", fact: "PSX has a <strong>Market Access Agreement</strong> with Euronext, allowing European traders easier access to Pakistani equities." },
+  { num: 89, cat: "global", icon: "🐉", fact: "China's <strong>Shanghai Stock Exchange</strong> owns an 8% stake in PSX — part of the strategic Chinese consortium that took 40% in 2017." },
+  { num: 90, cat: "global", icon: "🌐", fact: "International brokers including <strong>Goldman Sachs and JP Morgan</strong> have covered PSX stocks in research reports, signaling global interest." },
+  { num: 91, cat: "global", icon: "📊", fact: "PSX is a member of the <strong>World Federation of Exchanges (WFE)</strong> — the global industry association for exchanges." },
+  { num: 92, cat: "global", icon: "🏦", fact: "The <strong>IFC (World Bank Group)</strong> has invested in various PSX-listed companies as part of its Pakistan private sector development program." },
+  { num: 93, cat: "global", icon: "✈️", fact: "Many <strong>Gulf-based Pakistani investors</strong> actively invest in PSX, making Middle Eastern remittances a key capital market driver." },
+  { num: 94, cat: "global", icon: "💱", fact: "PSX stocks can be purchased through <strong>Global Depository Receipts (GDRs)</strong> on international markets by foreign investors." },
+  { num: 95, cat: "global", icon: "🌟", fact: "<strong>FTSE Russell</strong> has also assessed PSX for index inclusion — global index membership dramatically increases foreign capital inflows." },
+
+  // MORE FACTS (mixed)
+  { num: 96, cat: "market", icon: "🕌", fact: "PSX has a fully <strong>Shariah-compliant market segment</strong> — the KMI All Shares Index tracks all Islamic-finance eligible stocks." },
+  { num: 97, cat: "history", icon: "🎓", fact: "PSX runs an <strong>investor education program</strong> called the 'Invest & Grow' initiative to encourage younger Pakistanis to enter the capital markets." },
+  { num: 98, cat: "regulation", icon: "🔐", fact: "Pakistan's <strong>Securities Act 2015</strong> modernized the entire legal framework governing PSX — replacing laws from the 1960s and 1980s." },
+  { num: 99, cat: "economy", icon: "🤖", fact: "Algorithmic and <strong>high-frequency trading</strong> is growing on PSX, with tech-savvy brokers using automated systems to trade milliseconds faster." },
+  { num: 100, cat: "records", icon: "🥂", fact: "The crossing of <strong>100,000 points</strong> on the KSE-100 in 2024 was celebrated as Pakistan's financial coming-of-age moment — a historic milestone for a market born with just 5 companies in 1947." },
+];
+
+let activeFilter = 'all';
+
+function buildCards() {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  facts.forEach(f => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.cat = f.cat;
+    card.dataset.num = f.num;
+    card.dataset.fact = f.fact.replace(/<[^>]*>/g, '').toLowerCase();
+    card.innerHTML = `
+      <div class="card-header">
+        <span class="emoji-icon">${f.icon}</span>
+        <span class="cat-badge cat-${f.cat}">${f.cat}</span>
+      </div>
+      <div class="did-you-know">Did you know</div>
+      <div class="card-fact">${f.fact}</div>
+      <div class="card-num">${String(f.num).padStart(2, '0')}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function filterCards() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  let visible = 0;
+
+  cards.forEach(card => {
+    const catMatch = activeFilter === 'all' || card.dataset.cat === activeFilter;
+    const textMatch = !query || card.dataset.fact.includes(query);
+    if (catMatch && textMatch) {
+      card.classList.remove('hidden');
+      visible++;
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('counter').textContent = `Showing ${visible} of 100 facts`;
+  document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+}
+
+function setFilter(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterCards();
+}
+
+buildCards();
+</script>
+</body>
+</html>
